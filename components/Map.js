@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import tw from "tailwind-react-native-classnames";
@@ -18,16 +18,21 @@ const Map = () => {
 
 	useEffect(() => {
 		if (!origin || !destination) return;
-		// zoom && fit to markers
-		mapRef.current.fitToSuppliedMarkers(["origin", "destination"], {
-			edgePadding: {
-				top: 50,
-				bottom: 50,
-				right: 50,
-				left: 50,
-			},
-		});
 	}, [origin, destination]);
+
+	const markersRef = useCallback((node) => {
+		if (node !== null) {
+			node.fitToSuppliedMarkers(["origin", "destination"], {
+				animated: true,
+				edgePadding: {
+					top: 50,
+					bottom: 50,
+					right: 50,
+					left: 50,
+				},
+			});
+		}
+	}, []);
 
 	useEffect(() => {
 		if (!origin || !destination) return;
@@ -49,6 +54,7 @@ const Map = () => {
 			ref={mapRef}
 			style={tw`flex-1`}
 			mapType="mutedStandard"
+			onLayout={() => markersRef(mapRef.current)}
 			customMapStyle={mapStyle}
 			initialRegion={{
 				latitude: origin.location.lat,
