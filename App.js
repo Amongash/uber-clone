@@ -7,6 +7,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { store } from "./redux/store";
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
+if (__DEV__) {
+	import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
+}
 
 export default function App() {
 	const Stack = createNativeStackNavigator();

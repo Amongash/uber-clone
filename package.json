@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.0.5",
     "@reduxjs/toolkit": "^1.6.1",
@@ -31,7 +32,9 @@
     "tailwind-react-native-classnames": "^1.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "react-native-flipper": "^0.34.0",
+    "reactotron-react-native": "^5.0.0"
   },
   "private": true
 }
