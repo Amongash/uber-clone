@@ -58,50 +58,52 @@ const RideOptionsCard = () => {
 				</Text>
 			</View>
 
-			<FlatList
-				data={data}
-				keyExtractor={(item) => item.id}
-				renderItem={({ item: { id, title, multiplier, image }, item }) => (
+			<View>
+				<FlatList
+					data={data}
+					keyExtractor={(item) => item.id}
+					renderItem={({ item: { id, title, multiplier, image }, item }) => (
+						<TouchableOpacity
+							onPress={() => setSelected(item)}
+							style={tw`flex-row justify-between items-center px-10 ${
+								id === selected?.id && "bg-gray-200"
+							}`}
+						>
+							<Image
+								style={{ width: 80, height: 70, resizeMode: "contain" }}
+								source={{
+									uri: image,
+								}}
+							/>
+							<View style={tw`-ml-6`}>
+								<Text style={tw`text-xl font-semibold`}>{title}</Text>
+								<Text>{travelTimeInformation?.duration?.text}</Text>
+							</View>
+							<Text style={tw`text-xl`}>
+								{new Intl.NumberFormat("en-gb", {
+									style: "currency",
+									currency: "KES",
+								}).format(
+									(travelTimeInformation?.duration?.value *
+										SURGE_CHARGE_RATE *
+										multiplier) /
+										100
+								)}
+							</Text>
+						</TouchableOpacity>
+					)}
+				/>
+
+				<View>
 					<TouchableOpacity
-						onPress={() => setSelected(item)}
-						style={tw`flex-row justify-between items-center px-10 ${
-							id === selected?.id && "bg-gray-200"
-						}`}
+						disbaled={!selected}
+						style={tw`bg-black py-3 m-3 ${!selected && "bg-gray-300"}`}
 					>
-						<Image
-							style={{ width: 80, height: 80, resizeMode: "contain" }}
-							source={{
-								uri: image,
-							}}
-						/>
-						<View style={tw`-ml-6`}>
-							<Text style={tw`text-xl font-bold`}>{title}</Text>
-							<Text>{travelTimeInformation?.duration?.text}</Text>
-						</View>
-						<Text style={tw`text-xl`}>
-							{new Intl.NumberFormat("en-gb", {
-								style: "currency",
-								currency: "KES",
-							}).format(
-								(travelTimeInformation?.duration?.value *
-									SURGE_CHARGE_RATE *
-									multiplier) /
-									100
-							)}
+						<Text style={tw`text-center text-white text-xl`}>
+							Choose {selected?.title}
 						</Text>
 					</TouchableOpacity>
-				)}
-			/>
-
-			<View>
-				<TouchableOpacity
-					disbaled={!selected}
-					style={tw`bg-black py-3 m-3 ${!selected && "bg-gray-300"}`}
-				>
-					<Text style={tw`text-center text-white text-xl`}>
-						Choose {selected?.title}
-					</Text>
-				</TouchableOpacity>
+				</View>
 			</View>
 		</SafeAreaView>
 	);
