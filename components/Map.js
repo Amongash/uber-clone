@@ -18,6 +18,7 @@ const Map = () => {
 
 	useEffect(() => {
 		if (!origin || !destination) return;
+		markersRef(mapRef.current);
 	}, [origin, destination]);
 
 	const markersRef = useCallback((node) => {
